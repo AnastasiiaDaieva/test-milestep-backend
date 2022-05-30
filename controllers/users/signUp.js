@@ -1,6 +1,8 @@
 const CreateError = require("http-errors");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const { nanoid } = require("nanoid");
+const { confirmEmail } = require("../../helpers");
 
 const dotenv = require("dotenv");
 dotenv.config();
@@ -22,11 +24,21 @@ const signUp = async (req, res, next) => {
     const salt = await bcrypt.genSalt(10);
     const hashPassword = await bcrypt.hash(password, salt);
 
+    const confirmationToken = nanoid();
     await User.create({
       email,
       password: hashPassword,
+      confirmationToken,
       username,
     });
+
+    const mail = {
+      to: email,
+      subject: "Confirm your email",
+      html: `<a target="_blank" rel="noreferrer noopener" href='http://localhost:4000/users/${confirmationToken}'>Click to verify your email </a>`,
+    };
+
+    await confirmEmail(mail);
 
     const userCreated = await User.findOne({ email });
 

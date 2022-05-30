@@ -23,6 +23,14 @@ const userSchema = Schema(
       type: String,
       default: "",
     },
+    confirmedAt: {
+      type: Boolean,
+      default: false,
+    },
+    confirmationToken: {
+      type: String,
+      required: [true, "Confirmation token is required"],
+    },
   },
   { versionKey: false, timestamps: true }
 );
@@ -34,11 +42,16 @@ const registerJoiSchema = Joi.object({
   token: Joi.string(),
 });
 
+const confirmEmailSchema = Joi.object({
+  email: Joi.string().required(),
+});
+
 const User = model("user", userSchema);
 
 module.exports = {
   User,
   schemas: {
     register: registerJoiSchema,
+    verify: confirmEmailSchema,
   },
 };

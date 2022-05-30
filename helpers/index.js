@@ -1,3 +1,3 @@
-const confirm = require("./confirmEmail");
+const confirmEmail = require("./confirmEmail");
 
-module.exports = { confirm };
+module.exports = { confirmEmail };
