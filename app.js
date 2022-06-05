@@ -15,7 +15,7 @@ app.use(logger(formatsLogger));
 app.use(cors());
 app.use(express.json());
 
-// app.use("/api/tasks", tasksRouter);
+app.use("/tasks", routes.tasks);
 
 app.use("/users", routes.users);
 
