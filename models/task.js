@@ -3,17 +3,17 @@ const { Schema, model } = require("mongoose");
 
 const taskSchema = Schema(
   {
-    title: {
-      type: Schema.Types.ObjectId,
+    name: {
+      type: String,
       ref: "category",
-      required: [true, "Set the title"],
+      required: [true, "Set the name"],
     },
     description: {
       type: String,
-      required: [true, "Set the title"],
+      required: [true, "Set the description"],
     },
     priority: {
-      type: String,
+      type: { value: String, label: String, number: Number },
       required: [true, "Set the priority"],
     },
 
@@ -35,9 +35,13 @@ const taskSchema = Schema(
 );
 
 const joiAddTask = Joi.object({
-  title: Joi.string().required(),
+  name: Joi.string().required(),
   description: Joi.string().required(),
-  priority: Joi.string().required(),
+  priority: Joi.object({
+    value: Joi.string(),
+    label: Joi.string(),
+    number: Joi.number(),
+  }).required(),
   isDone: Joi.boolean(),
   dueDate: Joi.date().required(),
 });
