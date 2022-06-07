@@ -27,10 +27,10 @@ const userSchema = Schema(
       type: Boolean,
       default: false,
     },
-    confirmationToken: {
-      type: String,
-      required: [true, "Confirmation token is required"],
-    },
+    // confirmationToken: {
+    //   type: String,
+    //   required: [true, "Confirmation token is required"],
+    // },
   },
   { versionKey: false, timestamps: true }
 );

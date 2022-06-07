@@ -2,7 +2,7 @@ const { Task } = require("../../models/task");
 
 const getTasks = async (req, res, next) => {
   try {
-    console.log(req.query);
+    console.log("user", req);
     // const { _id } = req.user;
     // const data = await Task.find(
     //   { owner: _id },

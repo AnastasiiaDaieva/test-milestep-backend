@@ -16,12 +16,13 @@ const signIn = async (req, res, next) => {
     }
     const { email, password } = req.body;
     const user = await User.findOne({ email });
+    console.log(user);
     if (!user) {
       throw new CreateError(401, "Email or password is wrong");
     }
-    if (!user.confirmedAt) {
-      throw new CreateError(401, "Email wasn't confirmed");
-    }
+    // if (!user.confirmedAt) {
+    //   throw new CreateError(401, "Email wasn't confirmed");
+    // }
     const compareResult = await bcrypt.compare(password, user.password);
     if (!compareResult) {
       throw new CreateError(401, "Email or password is wrong");
@@ -37,7 +38,7 @@ const signIn = async (req, res, next) => {
       token,
       user: {
         email,
-        name: user.name,
+        name: user.username,
       },
     });
   } catch (error) {

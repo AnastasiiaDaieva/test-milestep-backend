@@ -25,11 +25,6 @@ const taskSchema = Schema(
       type: Date,
       required: [true, "Set the due date"],
     },
-    // owner: {
-    //   type: Schema.Types.ObjectId,
-    //   ref: "user",
-    //   required: true,
-    // },
   },
   { versionKey: false, timestamps: true }
 );
@@ -46,6 +41,13 @@ const joiAddTask = Joi.object({
   dueDate: Joi.date().required(),
 });
 
+const joiPatchDoneSchema = Joi.object({
+  isDone: Joi.boolean().required(),
+});
+
 const Task = model("task", taskSchema);
 
-module.exports = { Task, schemas: { add: joiAddTask } };
+module.exports = {
+  Task,
+  schemas: { add: joiAddTask, patchDone: joiPatchDoneSchema },
+};
